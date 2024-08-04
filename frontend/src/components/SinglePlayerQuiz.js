@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import questions from "../data/questions";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
 const SinglePlayerQuiz = () => {
+  const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [score, setScore] = useState(0);
@@ -17,6 +17,32 @@ const SinglePlayerQuiz = () => {
 
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/api/questions");
+        const formattedQuestions = response.data.map((question) => ({
+          ...question,
+          options: [
+            { value: question.optionA, label: question.optionA },
+            { value: question.optionB, label: question.optionB },
+            { value: question.optionC, label: question.optionC },
+            { value: question.optionD, label: question.optionD },
+          ],
+        }));
+        setQuestions(formattedQuestions);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
+
+  if (questions.length === 0) {
+    return <div>Loading...</div>;
+  }
 
   const currentQuestion = questions[currentQuestionIndex];
 

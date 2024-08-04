@@ -4,6 +4,7 @@ const { Server } = require("socket.io");
 const http = require("http");
 const authRoutes = require("./routes/authRoutes");
 const quizRoutes = require('./routes/quizRoutes');
+const questionRoutes = require('./routes/questionRoutes');
 
 const app = express();
 
@@ -19,6 +20,9 @@ app.use("/api/auth", authRoutes);
 
 // Use the quizRoutes for API requests
 app.use('/api/quiz', quizRoutes);
+
+// Use the questionRoutes for API requests
+app.use('/api', questionRoutes);
 
 const server = http.createServer(app);
 
