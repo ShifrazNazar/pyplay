@@ -2,8 +2,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import StartSinglePlayerQuiz from "./components/SinglePlayerQuiz";
-import StartMultiplayerQuiz from "./components/MultiplayerQuiz";
+import SinglePlayerQuiz from "./components/SinglePlayerQuiz";
+import MultiplayerQuiz from "./components/MultiplayerQuiz";
 import ViewProgress from "./components/ViewProgress";
 import ViewRules from "./components/ViewRules";
 import Flashcards from "./components/FlashCard";
@@ -22,11 +22,11 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route
             path="/single-player-quiz"
-            element={<ProtectedRoute element={<StartSinglePlayerQuiz />} />}
+            element={<ProtectedRoute element={<SinglePlayerQuiz />} />}
           />
           <Route
             path="/multiplayer-quiz"
-            element={<ProtectedRoute element={<StartMultiplayerQuiz />} />}
+            element={<ProtectedRoute element={<MultiplayerQuiz />} />}
           />
           <Route
             path="/view-progress"

@@ -3,12 +3,12 @@ const userModel = require("../models/userModel");
 
 // Registration Controller
 const register = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
 
-  if (!email || !password) {
+  if (!username || !email || !password) {
     return res
       .status(400)
-      .json({ message: "Email and password are required." });
+      .json({ message: "Username, email, and password are required." });
   }
 
   try {
@@ -27,7 +27,7 @@ const register = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Insert user into the database
-      userModel.createUser(email, hashedPassword, (err, results) => {
+      userModel.createUser(username, email, hashedPassword, (err, results) => {
         if (err) {
           console.error("Error inserting user:", err);
           return res.status(500).json({ message: "Error registering user." });
