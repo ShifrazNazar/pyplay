@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const userModel = require("../models/userModel");
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = "pyplay";
 
 // Registration Controller
 const register = async (req, res) => {
@@ -63,13 +65,21 @@ const login = (req, res) => {
     }
 
     const user = results[0];
-
-    // Compare the hashed password
     const isMatch = await bcrypt.compare(password, user.password);
+
     if (isMatch) {
-      return res
-        .status(200)
-        .json({ success: true, message: "Login successful!" });
+      // Create JWT token
+      const token = jwt.sign(
+        { id: user.id, username: user.username, email: user.email },
+        JWT_SECRET,
+        { expiresIn: "24h" }
+      );
+
+      return res.status(200).json({
+        success: true,
+        message: "Login successful.",
+        token: token,
+      });
     } else {
       return res
         .status(400)

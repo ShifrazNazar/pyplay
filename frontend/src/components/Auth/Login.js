@@ -19,8 +19,12 @@ const Login = () => {
           { email, password }
         );
         const token = response.data.token;
-        login(token);
-        navigate("/");
+        if (token) {
+          login(token);
+          navigate("/");
+        } else {
+          setError("Login failed.");
+        }
       } catch (err) {
         setError("Invalid email or password.");
       }
