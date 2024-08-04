@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import questions from "../data/questions";
 import Navbar from "./Navbar";
+import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 const SinglePlayerQuiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -14,6 +16,7 @@ const SinglePlayerQuiz = () => {
   const [optionsDisabled, setOptionsDisabled] = useState(false);
 
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -35,7 +38,7 @@ const SinglePlayerQuiz = () => {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (answerSubmitted) {
       if (currentQuestionIndex < questions.length - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -46,7 +49,23 @@ const SinglePlayerQuiz = () => {
         setAnswerSubmitted(false);
         setErrorMessage("");
       } else {
-        alert("Quiz completed! Your final score is " + score);
+        // Quiz is complete - submit score to backend
+        try {
+          const token = localStorage.getItem("token");
+          await axios.post(
+            "http://localhost:5001/api/quiz/submit",
+            { userId: user.id, score },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          alert("Quiz completed! Your final score is " + score);
+          navigate("/");
+        } catch (error) {
+          console.error("Error submitting quiz:", error);
+        }
       }
     } else {
       setErrorMessage(

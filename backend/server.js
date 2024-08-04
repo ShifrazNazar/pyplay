@@ -3,6 +3,7 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 const http = require("http");
 const authRoutes = require("./routes/authRoutes");
+const quizRoutes = require('./routes/quizRoutes');
 
 const app = express();
 
@@ -15,6 +16,9 @@ app.use(express.json());
 
 // Use the authRoutes for API requests
 app.use("/api/auth", authRoutes);
+
+// Use the quizRoutes for API requests
+app.use('/api/quiz', quizRoutes);
 
 const server = http.createServer(app);
 
