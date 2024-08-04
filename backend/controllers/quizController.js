@@ -1,4 +1,4 @@
-const QuizSubmission = require("../models/QuizSubmission");
+const quizSubmissionModel = require("../models/quizSubmissionModel");
 
 exports.submitQuiz = async (req, res) => {
   try {
@@ -8,7 +8,7 @@ exports.submitQuiz = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    await QuizSubmission.create(userId, score);
+    await quizSubmissionModel.create(userId, score);
     res.status(201).json({ message: "Quiz submitted successfully" });
   } catch (err) {
     console.error(err);
