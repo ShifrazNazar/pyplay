@@ -1,4 +1,3 @@
-// src/components/Flashcards.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import flashcards from "../data/flashcards";
@@ -32,7 +31,7 @@ const Flashcards = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Navbar />
-      <main className="flex-grow flex flex-col items-center justify-center my-10">
+      <main className="flex-grow flex flex-col items-center justify-center my-10 px-4">
         <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg">
           <h2 className="text-2xl font-bold text-primary mb-4 text-center">
             Flashcard: {currentCard.id}
@@ -52,10 +51,10 @@ const Flashcards = () => {
             </div>
           </div>
 
-          <div className="mt-6 flex justify-between items-center">
+          <div className="mt-6 flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0 sm:space-x-4">
             <button
               onClick={handlePrevious}
-              className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition"
+              className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition w-full sm:w-auto"
               disabled={currentCardIndex === 0}
             >
               Previous
@@ -63,14 +62,14 @@ const Flashcards = () => {
 
             <button
               onClick={() => setShowAnswer(!showAnswer)}
-              className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition"
+              className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition w-full sm:w-auto"
             >
               {showAnswer ? "Hide Answer" : "Show Answer"}
             </button>
 
             <button
               onClick={handleNext}
-              className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition"
+              className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition w-full sm:w-auto"
               disabled={currentCardIndex === flashcards.length - 1}
             >
               Next

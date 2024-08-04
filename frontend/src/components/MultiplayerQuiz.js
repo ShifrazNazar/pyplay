@@ -69,16 +69,16 @@ const MultiplayerQuiz = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Navbar />
-      <main className="flex-grow flex flex-col items-center justify-center my-10">
+      <main className="flex-grow flex flex-col items-center justify-center my-10 px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl">
           <h1 className="text-3xl text-center font-bold text-primary mb-4">
             Multiplayer Quiz
           </h1>
 
           {/* Flex Container for Question and Opponent Info */}
-          <div className="flex">
+          <div className="flex flex-col sm:flex-row">
             {/* Question Section */}
-            <div className="flex-grow pr-4">
+            <div className="flex-grow sm:pr-4 mb-4 sm:mb-0">
               <h2 className="text-xl font-semibold mb-4">
                 {currentQuestion.question}
               </h2>
@@ -131,10 +131,10 @@ const MultiplayerQuiz = () => {
               )}
 
               {/* Actions and Score */}
-              <div className="mt-4 flex justify-between items-center">
+              <div className="mt-4 flex flex-col sm:flex-row justify-between items-center">
                 <button
                   onClick={useHint}
-                  className={`bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 ${
+                  className={`bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 mb-2 sm:mb-0 ${
                     hintUsed || hintDisabled
                       ? "cursor-not-allowed opacity-50"
                       : ""
@@ -153,7 +153,7 @@ const MultiplayerQuiz = () => {
               </div>
 
               {/* Progress and Score */}
-              <div className="mt-4 flex justify-between items-center">
+              <div className="mt-4 flex flex-col sm:flex-row justify-between items-center">
                 <p className="text-lg font-semibold">
                   Progress: {currentQuestionIndex + 1}/{questions.length}
                 </p>
@@ -162,7 +162,7 @@ const MultiplayerQuiz = () => {
             </div>
 
             {/* Opponent Info Section */}
-            <div className="w-64 pl-4 border-l border-gray-200">
+            <div className="w-full sm:w-64 sm:pl-4 sm:border-l border-gray-200">
               <h2 className="text-lg font-semibold mb-2">Opponent Info</h2>
               <p className="text-gray-700">
                 Opponent's Score: <span className="font-semibold">8</span>

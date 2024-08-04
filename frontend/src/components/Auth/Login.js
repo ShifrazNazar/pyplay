@@ -1,4 +1,3 @@
-// src/components/Auth/Login.js
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -31,9 +30,9 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-3xl font-bold text-primary mb-6 text-center">
+    <div className="bg-gray-50 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-6 text-center">
           Login
         </h1>
         {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
@@ -50,7 +49,7 @@ const Login = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+              className="w-full p-2 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary text-sm sm:text-base"
               required
             />
           </div>
@@ -66,13 +65,13 @@ const Login = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+              className="w-full p-2 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary text-sm sm:text-base"
               required
             />
           </div>
           <button
             type="submit"
-            className="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3B3A8B] transition w-full"
+            className="bg-primary text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium hover:bg-[#3B3A8B] transition w-full text-sm sm:text-base"
           >
             Login
           </button>

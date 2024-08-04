@@ -5,7 +5,7 @@ const ViewProgress = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Navbar />
-      <main className="flex-grow flex flex-col items-center justify-center my-10">
+      <main className="flex-grow flex flex-col items-center justify-center my-10 px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl">
           <h1 className="text-3xl text-center font-bold text-primary mb-4">
             Progress Overview
