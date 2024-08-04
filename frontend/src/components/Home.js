@@ -24,7 +24,7 @@ const Home = () => {
               Start Single Player Quiz
             </a>
             <a
-              href="/multiplayer-quiz"
+              href="/room"
               className="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-[#3B3A8B] transition"
             >
               Start Multiplayer Quiz

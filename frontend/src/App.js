@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import SinglePlayerQuiz from "./components/SinglePlayerQuiz";
 import MultiplayerQuiz from "./components/MultiplayerQuiz";
+import Room from "./components/Room";
 import ViewProgress from "./components/ViewProgress";
 import ViewRules from "./components/ViewRules";
 import Flashcards from "./components/FlashCard";
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/room" element={<ProtectedRoute element={<Room />} />} />
           <Route
             path="/single-player-quiz"
             element={<ProtectedRoute element={<SinglePlayerQuiz />} />}

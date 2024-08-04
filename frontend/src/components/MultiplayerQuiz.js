@@ -1,12 +1,16 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { io } from "socket.io-client";
 import questions from "../data/questions";
 import Navbar from "./Navbar";
+
+const socket = io("http://localhost:5001");
 
 const MultiplayerQuiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [score, setScore] = useState(0);
+  const [opponentScore, setOpponentScore] = useState(0);
   const [hintUsed, setHintUsed] = useState(false);
   const [answerSubmitted, setAnswerSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -14,6 +18,25 @@ const MultiplayerQuiz = () => {
   const [optionsDisabled, setOptionsDisabled] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const roomCode = location.state?.roomCode;
+
+  useEffect(() => {
+    if (!roomCode) {
+      navigate("/");
+    }
+
+    socket.emit("joinRoom", { roomCode });
+
+    socket.on("updateOpponentScore", (newScore) => {
+      setOpponentScore(newScore);
+    });
+
+    return () => {
+      socket.emit("leaveRoom", { roomCode });
+      socket.off("updateOpponentScore");
+    };
+  }, [roomCode, navigate]);
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -22,10 +45,18 @@ const MultiplayerQuiz = () => {
       setSelectedOption(optionValue);
 
       if (optionValue === currentQuestion.correctAnswer) {
-        setScore(score + 10);
+        setScore((prevScore) => {
+          const newScore = prevScore + 10;
+          socket.emit("scoreUpdate", { roomCode, score: newScore });
+          return newScore;
+        });
         setErrorMessage("");
       } else {
-        setScore(score - 2);
+        setScore((prevScore) => {
+          const newScore = prevScore - 2;
+          socket.emit("scoreUpdate", { roomCode, score: newScore });
+          return newScore;
+        });
         setHintDisabled(true);
         setOptionsDisabled(true);
         setErrorMessage("");
@@ -165,7 +196,8 @@ const MultiplayerQuiz = () => {
             <div className="w-full sm:w-64 sm:pl-4 sm:border-l border-gray-200">
               <h2 className="text-lg font-semibold mb-2">Opponent Info</h2>
               <p className="text-gray-700">
-                Opponent's Score: <span className="font-semibold">8</span>
+                Opponent's Score:{" "}
+                <span className="font-semibold">{opponentScore}</span>
               </p>
             </div>
           </div>

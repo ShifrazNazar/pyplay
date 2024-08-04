@@ -78,7 +78,7 @@ const Navbar = () => {
                 Single Player Quiz
               </a>
               <a
-                href="/multiplayer-quiz"
+                href="/room"
                 className="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
               >
                 Multiplayer Quiz
