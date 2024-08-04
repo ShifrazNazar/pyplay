@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import questions from '../data/questions';
-import Navbar from './Navbar';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import questions from "../data/questions";
+import Navbar from "./Navbar";
 
 const MultiplayerQuiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -9,7 +9,7 @@ const MultiplayerQuiz = () => {
   const [score, setScore] = useState(0);
   const [hintUsed, setHintUsed] = useState(false);
   const [answerSubmitted, setAnswerSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [hintDisabled, setHintDisabled] = useState(false);
   const [optionsDisabled, setOptionsDisabled] = useState(false);
 
@@ -23,12 +23,12 @@ const MultiplayerQuiz = () => {
 
       if (optionValue === currentQuestion.correctAnswer) {
         setScore(score + 10);
-        setErrorMessage('');
+        setErrorMessage("");
       } else {
         setScore(score - 2);
         setHintDisabled(true);
         setOptionsDisabled(true);
-        setErrorMessage('');
+        setErrorMessage("");
       }
 
       setAnswerSubmitted(true);
@@ -44,12 +44,14 @@ const MultiplayerQuiz = () => {
         setHintDisabled(false);
         setOptionsDisabled(false);
         setAnswerSubmitted(false);
-        setErrorMessage('');
+        setErrorMessage("");
       } else {
-        alert('Quiz completed! Your final score is ' + score);
+        alert("Quiz completed! Your final score is " + score);
       }
     } else {
-      setErrorMessage('Please select an option before proceeding to the next question.');
+      setErrorMessage(
+        "Please select an option before proceeding to the next question."
+      );
     }
   };
 
@@ -61,7 +63,7 @@ const MultiplayerQuiz = () => {
   };
 
   const quitQuiz = () => {
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -69,30 +71,36 @@ const MultiplayerQuiz = () => {
       <Navbar />
       <main className="flex-grow flex flex-col items-center justify-center my-10">
         <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl">
-          <h1 className="text-3xl text-center font-bold text-primary mb-4">Multiplayer Quiz</h1>
+          <h1 className="text-3xl text-center font-bold text-primary mb-4">
+            Multiplayer Quiz
+          </h1>
 
           {/* Flex Container for Question and Opponent Info */}
           <div className="flex">
             {/* Question Section */}
             <div className="flex-grow pr-4">
-              <h2 className="text-xl font-semibold mb-4">{currentQuestion.question}</h2>
+              <h2 className="text-xl font-semibold mb-4">
+                {currentQuestion.question}
+              </h2>
 
               <div className="space-y-2">
-                {currentQuestion.options.map(option => {
-                  let buttonClass = 'w-full text-left px-4 py-2 rounded-md border transition-colors duration-300 ';
+                {currentQuestion.options.map((option) => {
+                  let buttonClass =
+                    "w-full text-left px-4 py-2 rounded-md border transition-colors duration-300 ";
 
                   if (answerSubmitted) {
                     if (option.value === currentQuestion.correctAnswer) {
-                      buttonClass += 'bg-green-200 text-green-800'; // Correct answer
+                      buttonClass += "bg-green-200 text-green-800"; // Correct answer
                     } else if (option.value === selectedOption) {
-                      buttonClass += 'bg-red-200 text-red-800'; // Incorrect answer
+                      buttonClass += "bg-red-200 text-red-800"; // Incorrect answer
                     } else {
-                      buttonClass += 'bg-gray-100 text-gray-700'; // Non-selected options
+                      buttonClass += "bg-gray-100 text-gray-700"; // Non-selected options
                     }
                   } else {
-                    buttonClass += option.value === selectedOption
-                      ? 'bg-blue-200 text-blue-800 border-blue-500' // Selected answer
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900'; // Non-selected options
+                    buttonClass +=
+                      option.value === selectedOption
+                        ? "bg-blue-200 text-blue-800 border-blue-500" // Selected answer
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-gray-900"; // Non-selected options
                   }
 
                   return (
@@ -126,7 +134,11 @@ const MultiplayerQuiz = () => {
               <div className="mt-4 flex justify-between items-center">
                 <button
                   onClick={useHint}
-                  className={`bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 ${hintUsed || hintDisabled ? 'cursor-not-allowed opacity-50' : ''}`}
+                  className={`bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 ${
+                    hintUsed || hintDisabled
+                      ? "cursor-not-allowed opacity-50"
+                      : ""
+                  }`}
                   disabled={hintUsed || hintDisabled}
                 >
                   Use Hint
@@ -142,7 +154,9 @@ const MultiplayerQuiz = () => {
 
               {/* Progress and Score */}
               <div className="mt-4 flex justify-between items-center">
-                <p className="text-lg font-semibold">Progress: {currentQuestionIndex + 1}/{questions.length}</p>
+                <p className="text-lg font-semibold">
+                  Progress: {currentQuestionIndex + 1}/{questions.length}
+                </p>
                 <p className="text-lg font-semibold">Score: {score}</p>
               </div>
             </div>
@@ -150,7 +164,9 @@ const MultiplayerQuiz = () => {
             {/* Opponent Info Section */}
             <div className="w-64 pl-4 border-l border-gray-200">
               <h2 className="text-lg font-semibold mb-2">Opponent Info</h2>
-              <p className="text-gray-700">Opponent's Score: <span className="font-semibold">8</span></p>
+              <p className="text-gray-700">
+                Opponent's Score: <span className="font-semibold">8</span>
+              </p>
             </div>
           </div>
         </div>

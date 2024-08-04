@@ -1,5 +1,5 @@
-import React from 'react';
-import Navbar from './Navbar';
+import React from "react";
+import Navbar from "./Navbar";
 
 const ViewProgress = () => {
   return (
@@ -7,14 +7,21 @@ const ViewProgress = () => {
       <Navbar />
       <main className="flex-grow flex flex-col items-center justify-center my-10">
         <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl">
-          <h1 className="text-3xl text-center font-bold text-primary mb-4">Progress Overview</h1>
+          <h1 className="text-3xl text-center font-bold text-primary mb-4">
+            Progress Overview
+          </h1>
 
           {/* Your Progress */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">Your Progress</h2>
             <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
-              <p className="text-lg font-semibold">Score: <span className="text-primary">150</span></p>
-              <p className="text-lg font-semibold">Total Questions Attempted: <span className="text-primary">50</span></p>
+              <p className="text-lg font-semibold">
+                Score: <span className="text-primary">150</span>
+              </p>
+              <p className="text-lg font-semibold">
+                Total Questions Attempted:{" "}
+                <span className="text-primary">50</span>
+              </p>
             </div>
           </section>
 
@@ -22,7 +29,9 @@ const ViewProgress = () => {
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">Score Over Time</h2>
             <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
-              <p className="text-lg">Graph or chart to display score trends over time</p>
+              <p className="text-lg">
+                Graph or chart to display score trends over time
+              </p>
               {/* Insert a graph or chart component here */}
             </div>
           </section>
@@ -31,10 +40,18 @@ const ViewProgress = () => {
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">Milestones Achieved</h2>
             <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
-              <p className="text-lg">List of milestones with dates and descriptions</p>
+              <p className="text-lg">
+                List of milestones with dates and descriptions
+              </p>
               {/* Example milestone */}
-              <p><span className="font-semibold">Milestone 1:</span> Reached 100 points on July 30, 2024</p>
-              <p><span className="font-semibold">Milestone 2:</span> Completed 10 quizzes on August 1, 2024</p>
+              <p>
+                <span className="font-semibold">Milestone 1:</span> Reached 100
+                points on July 30, 2024
+              </p>
+              <p>
+                <span className="font-semibold">Milestone 2:</span> Completed 10
+                quizzes on August 1, 2024
+              </p>
             </div>
           </section>
 
@@ -70,7 +87,9 @@ const ViewProgress = () => {
 
           {/* Correct/Wrong Answers Breakdown */}
           <section className="mb-6">
-            <h2 className="text-2xl font-semibold mb-2">Correct/Wrong Answers Breakdown</h2>
+            <h2 className="text-2xl font-semibold mb-2">
+              Correct/Wrong Answers Breakdown
+            </h2>
             <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
               <p className="text-lg font-semibold">Correct Answers:</p>
               <p className="text-lg">42</p>

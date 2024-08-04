@@ -63,8 +63,8 @@ const Home = () => {
                 Flashcards
               </h3>
               <p className="text-gray-600">
-                Utilize flashcards to study and review material at your
-                own pace.
+                Utilize flashcards to study and review material at your own
+                pace.
               </p>
             </div>
           </div>
