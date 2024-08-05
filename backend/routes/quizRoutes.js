@@ -1,7 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const quizController = require('../controllers/quizController');
+const {
+  submitQuiz,
+  getUserScoresController,
+} = require("../controllers/quizController");
 
-router.post('/submit', quizController.submitQuiz);
+// Route for submitting a quiz
+router.post("/submit", submitQuiz);
+
+// Route for retrieving user scores
+router.get("/user-scores", getUserScoresController);
 
 module.exports = router;

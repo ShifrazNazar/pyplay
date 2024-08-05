@@ -1,17 +1,32 @@
 const db = require("../db");
 
-class quizModel {
-  static create(userId, score) {
-    return new Promise((resolve, reject) => {
-      const query = `INSERT INTO quizzes (user_id, score) VALUES (?, ?)`;
-      db.query(query, [userId, score], (err, result) => {
-        if (err) {
-          return reject(err);
-        }
-        resolve(result);
-      });
-    });
-  }
-}
+// Function to create a new quiz entry
+const createQuiz = (userId, score, callback) => {
+  const query = `INSERT INTO quizzes (user_id, score) VALUES (?, ?)`;
+  db.query(query, [userId, score], (err, result) => {
+    if (err) {
+      return callback(err);
+    }
+    callback(null, result);
+  });
+};
 
-module.exports = quizModel;
+// Function to retrieve user scores
+const getUserScores = (callback) => {
+  const query = `
+    SELECT users.username, quizzes.score
+    FROM users
+    JOIN quizzes ON users.id = quizzes.user_id;
+  `;
+  db.query(query, (err, rows) => {
+    if (err) {
+      return callback(err);
+    }
+    callback(null, rows);
+  });
+};
+
+module.exports = {
+  createQuiz,
+  getUserScores,
+};
