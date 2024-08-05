@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import CompleteQuiz from "./CompleteQuiz";
 
 const SinglePlayerQuiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -14,6 +15,7 @@ const SinglePlayerQuiz = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [hintDisabled, setHintDisabled] = useState(false);
   const [optionsDisabled, setOptionsDisabled] = useState(false);
+  const [showCompleteQuiz, setShowCompleteQuiz] = useState(false);
 
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -87,8 +89,7 @@ const SinglePlayerQuiz = () => {
               },
             }
           );
-          alert("Quiz completed! Your final score is " + score);
-          navigate("/");
+          setShowCompleteQuiz(true);
         } catch (error) {
           console.error("Error submitting quiz:", error);
         }
@@ -109,6 +110,11 @@ const SinglePlayerQuiz = () => {
 
   const quitQuiz = () => {
     navigate("/");
+  };
+
+  const closeModal = () => {
+    setShowCompleteQuiz(false);
+    navigate("/"); 
   };
 
   return (
@@ -206,6 +212,9 @@ const SinglePlayerQuiz = () => {
           </button>
         </div>
       </main>
+
+      {/* Show completion modal when quiz is done */}
+      {showCompleteQuiz && <CompleteQuiz score={score} onClose={closeModal} />}
     </div>
   );
 };

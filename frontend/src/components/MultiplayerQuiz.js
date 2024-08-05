@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { io } from "socket.io-client";
 import questions from "../data/questions";
 import Navbar from "./Navbar";
+import CompleteQuiz from "./CompleteQuiz";
 
 const socket = io("http://localhost:5001");
 
@@ -16,6 +17,7 @@ const MultiplayerQuiz = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [hintDisabled, setHintDisabled] = useState(false);
   const [optionsDisabled, setOptionsDisabled] = useState(false);
+  const [showCompleteQuiz, setShowCompleteQuiz] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -77,7 +79,7 @@ const MultiplayerQuiz = () => {
         setAnswerSubmitted(false);
         setErrorMessage("");
       } else {
-        alert("Quiz completed! Your final score is " + score);
+        setShowCompleteQuiz(true);
       }
     } else {
       setErrorMessage(
@@ -94,6 +96,11 @@ const MultiplayerQuiz = () => {
   };
 
   const quitQuiz = () => {
+    navigate("/");
+  };
+
+  const closeModal = () => {
+    setShowCompleteQuiz(false);
     navigate("/");
   };
 
@@ -213,6 +220,9 @@ const MultiplayerQuiz = () => {
           </button>
         </div>
       </main>
+
+      {/* Show completion modal when quiz is done */}
+      {showCompleteQuiz && <CompleteQuiz score={score} onClose={closeModal} />}
     </div>
   );
 };
