@@ -84,16 +84,16 @@ const Navbar = () => {
                 Multiplayer Quiz
               </a>
               <a
-                href="/view-progress"
+                href="/scoreboard"
                 className="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
               >
-                View Progress
+                Scoreboard
               </a>
               <a
-                href="/view-rules"
+                href="/rules"
                 className="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
               >
-                View Rules
+                Rules
               </a>
               <a
                 href="/flashcards"
@@ -142,16 +142,16 @@ const Navbar = () => {
               Multiplayer Quiz
             </a>
             <a
-              href="/view-progress"
+              href="/scoreboard"
               className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
             >
-              View Progress
+              Scoreboard
             </a>
             <a
-              href="/view-rules"
+              href="/rules"
               className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
             >
-              View Rules
+              Rules
             </a>
             <a
               href="/flashcards"

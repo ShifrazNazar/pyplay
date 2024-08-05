@@ -5,8 +5,8 @@ import { AuthProvider } from "./context/AuthContext";
 import SinglePlayerQuiz from "./components/SinglePlayerQuiz";
 import MultiplayerQuiz from "./components/MultiplayerQuiz";
 import Room from "./components/Room";
-import ViewProgress from "./components/ViewProgress";
-import ViewRules from "./components/ViewRules";
+import Scoreboard from "./components/Scoreboard";
+import Rules from "./components/Rules";
 import Flashcards from "./components/FlashCard";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
@@ -31,12 +31,12 @@ function App() {
             element={<ProtectedRoute element={<MultiplayerQuiz />} />}
           />
           <Route
-            path="/view-progress"
-            element={<ProtectedRoute element={<ViewProgress />} />}
+            path="/scoreboard"
+            element={<ProtectedRoute element={<Scoreboard />} />}
           />
           <Route
-            path="/view-rules"
-            element={<ProtectedRoute element={<ViewRules />} />}
+            path="/rules"
+            element={<ProtectedRoute element={<Rules />} />}
           />
           <Route
             path="/flashcards"
