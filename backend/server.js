@@ -3,15 +3,17 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 const http = require("http");
 const authRoutes = require("./routes/authRoutes");
-const quizRoutes = require('./routes/quizRoutes');
-const mcqRoutes = require('./routes/mcqRoutes');
+const quizRoutes = require("./routes/quizRoutes");
+const mcqRoutes = require("./routes/mcqRoutes");
 
 const app = express();
 
-app.use(cors({
-  origin: "http://localhost:3000",
-  methods: ["GET", "POST"],
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  })
+);
 
 app.use(express.json());
 
@@ -19,10 +21,10 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 
 // Use the quizRoutes for API requests
-app.use('/api/quiz', quizRoutes);
+app.use("/api/quiz", quizRoutes);
 
 // Use the mcqRoutes for API requests
-app.use('/api', mcqRoutes);
+app.use("/api", mcqRoutes);
 
 const server = http.createServer(app);
 
