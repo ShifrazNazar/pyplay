@@ -5,6 +5,7 @@ const http = require("http");
 const authRoutes = require("./routes/authRoutes");
 const quizRoutes = require("./routes/quizRoutes");
 const mcqRoutes = require("./routes/mcqRoutes");
+require('dotenv').config();
 
 const app = express();
 
@@ -57,7 +58,7 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
