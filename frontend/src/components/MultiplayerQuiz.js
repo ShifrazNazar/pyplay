@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { io } from "socket.io-client";
-import questions from "../data/questions";
+import axios from "axios";
 import Navbar from "./Navbar";
 import CompleteQuiz from "./CompleteQuiz";
 
 const socket = io("http://localhost:5001");
 
 const MultiplayerQuiz = () => {
+  const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [score, setScore] = useState(0);
@@ -28,6 +29,26 @@ const MultiplayerQuiz = () => {
       navigate("/");
     }
 
+    const fetchQuestions = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/api/mcqs");
+        const formattedQuestions = response.data.map((question) => ({
+          ...question,
+          options: [
+            { value: question.optionA, label: question.optionA },
+            { value: question.optionB, label: question.optionB },
+            { value: question.optionC, label: question.optionC },
+            { value: question.optionD, label: question.optionD },
+          ],
+        }));
+        setQuestions(formattedQuestions);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    };
+
+    fetchQuestions();
+
     socket.emit("joinRoom", { roomCode });
 
     socket.on("updateOpponentScore", (newScore) => {
@@ -40,13 +61,17 @@ const MultiplayerQuiz = () => {
     };
   }, [roomCode, navigate]);
 
+  if (questions.length === 0) {
+    return <div>Loading...</div>;
+  }
+
   const currentQuestion = questions[currentQuestionIndex];
 
   const handleAnswer = (optionValue) => {
     if (!answerSubmitted && !optionsDisabled) {
       setSelectedOption(optionValue);
 
-      if (optionValue === currentQuestion.correctAnswer) {
+      if (optionValue === currentQuestion.answer) {
         setScore((prevScore) => {
           const newScore = prevScore + 10;
           socket.emit("scoreUpdate", { roomCode, score: newScore });
@@ -127,7 +152,7 @@ const MultiplayerQuiz = () => {
                     "w-full text-left px-4 py-2 rounded-md border transition-colors duration-300 ";
 
                   if (answerSubmitted) {
-                    if (option.value === currentQuestion.correctAnswer) {
+                    if (option.value === currentQuestion.answer) {
                       buttonClass += "bg-green-200 text-green-800"; // Correct answer
                     } else if (option.value === selectedOption) {
                       buttonClass += "bg-red-200 text-red-800"; // Incorrect answer

@@ -23,7 +23,7 @@ const SinglePlayerQuiz = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/questions");
+        const response = await axios.get("http://localhost:5001/api/mcqs");
         const formattedQuestions = response.data.map((question) => ({
           ...question,
           options: [
@@ -52,7 +52,7 @@ const SinglePlayerQuiz = () => {
     if (!answerSubmitted && !optionsDisabled) {
       setSelectedOption(optionValue);
 
-      if (optionValue === currentQuestion.correctAnswer) {
+      if (optionValue === currentQuestion.answer) {
         setScore(score + 10);
         setErrorMessage("");
       } else {
@@ -136,7 +136,7 @@ const SinglePlayerQuiz = () => {
                 "w-full text-left px-4 py-2 rounded-md border transition-colors duration-300 ";
 
               if (answerSubmitted) {
-                if (option.value === currentQuestion.correctAnswer) {
+                if (option.value === currentQuestion.answer) {
                   buttonClass += "bg-green-200 text-green-800"; // Correct answer
                 } else if (option.value === selectedOption) {
                   buttonClass += "bg-red-200 text-red-800"; // Incorrect answer
