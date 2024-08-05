@@ -1,9 +1,9 @@
 const db = require("../db");
 
-class quizSubmissionModel {
+class quizModel {
   static create(userId, score) {
     return new Promise((resolve, reject) => {
-      const query = `INSERT INTO quiz_submissions (user_id, score) VALUES (?, ?)`;
+      const query = `INSERT INTO quiz (user_id, score) VALUES (?, ?)`;
       db.query(query, [userId, score], (err, result) => {
         if (err) {
           return reject(err);
@@ -14,4 +14,4 @@ class quizSubmissionModel {
   }
 }
 
-module.exports = quizSubmissionModel;
+module.exports = quizModel;
