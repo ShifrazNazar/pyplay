@@ -1,7 +1,7 @@
 const userModel = require("../models/userModel");
 
 const getProfile = (req, res) => {
-  const userId = req.user.id; // Extracted from the middleware
+  const userId = req.user.id;
 
   userModel.findUserById(userId, (err, results) => {
     if (err) {

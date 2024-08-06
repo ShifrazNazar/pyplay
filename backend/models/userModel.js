@@ -21,6 +21,6 @@ const createUser = (username, email, hashedPassword, callback) => {
 
 module.exports = {
   findUserByEmail,
-  findUserById,  // Export the new function
+  findUserById,
   createUser,
 };
