@@ -6,14 +6,14 @@ const authRoutes = require("./routes/authRoutes");
 const quizRoutes = require("./routes/quizRoutes");
 const mcqRoutes = require("./routes/mcqRoutes");
 const userRoutes = require("./routes/userRoutes");
-require('dotenv').config();
+require("dotenv").config();
 
 const app = express();
 
 app.use(
   cors({
     origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
@@ -30,7 +30,6 @@ app.use("/api", mcqRoutes);
 
 // Use the userRoutes for API requests
 app.use("/api/user", userRoutes);
-
 
 const server = http.createServer(app);
 

@@ -19,8 +19,15 @@ const createUser = (username, email, hashedPassword, callback) => {
   db.query(query, [username, email, hashedPassword], callback);
 };
 
+// Function to update a user's username
+const updateUsername = (userId, newUsername, callback) => {
+  const query = "UPDATE users SET username = ? WHERE id = ?";
+  db.query(query, [newUsername, userId], callback);
+};
+
 module.exports = {
   findUserByEmail,
   findUserById,
   createUser,
+  updateUsername,
 };
