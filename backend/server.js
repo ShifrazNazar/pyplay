@@ -5,6 +5,7 @@ const http = require("http");
 const authRoutes = require("./routes/authRoutes");
 const quizRoutes = require("./routes/quizRoutes");
 const mcqRoutes = require("./routes/mcqRoutes");
+const userRoutes = require("./routes/userRoutes");
 require('dotenv').config();
 
 const app = express();
@@ -26,6 +27,10 @@ app.use("/api/quiz", quizRoutes);
 
 // Use the mcqRoutes for API requests
 app.use("/api", mcqRoutes);
+
+// Use the userRoutes for API requests
+app.use("/api/user", userRoutes);
+
 
 const server = http.createServer(app);
 

@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 const userModel = require("../models/userModel");
-const jwt = require("jsonwebtoken");
-const JWT_SECRET = "pyplay";
+const { generateToken } = require("../middlewares/authMiddleware");
 
 // Registration Controller
 const register = async (req, res) => {
@@ -68,12 +67,8 @@ const login = (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch) {
-      // Create JWT token
-      const token = jwt.sign(
-        { id: user.id, username: user.username, email: user.email },
-        JWT_SECRET,
-        { expiresIn: "24h" }
-      );
+      // Create JWT token using the generateToken function
+      const token = generateToken(user);
 
       return res.status(200).json({
         success: true,

@@ -12,6 +12,7 @@ import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Home from "./components/Home";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -41,6 +42,10 @@ function App() {
           <Route
             path="/flashcards"
             element={<ProtectedRoute element={<Flashcards />} />}
+          />
+          <Route
+            path="/profile"
+            element={<ProtectedRoute element={<Profile />} />}
           />
         </Routes>
       </Router>

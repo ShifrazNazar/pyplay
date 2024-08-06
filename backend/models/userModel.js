@@ -6,6 +6,12 @@ const findUserByEmail = (email, callback) => {
   db.query(query, [email], callback);
 };
 
+// Function to find a user by ID
+const findUserById = (userId, callback) => {
+  const query = "SELECT * FROM users WHERE id = ?";
+  db.query(query, [userId], callback);
+};
+
 // Function to create a new user
 const createUser = (username, email, hashedPassword, callback) => {
   const query =
@@ -15,5 +21,6 @@ const createUser = (username, email, hashedPassword, callback) => {
 
 module.exports = {
   findUserByEmail,
+  findUserById,  // Export the new function
   createUser,
 };
