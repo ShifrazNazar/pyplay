@@ -19,7 +19,10 @@ const ViewProgress = () => {
           return acc;
         }, {});
 
-        setScores(Object.values(highestScores));
+        const sortedScores = Object.values(highestScores).sort(
+          (a, b) => b.score - a.score
+        );
+        setScores(sortedScores);
       } catch (error) {
         console.error("Failed to fetch scores", error);
       }
@@ -34,7 +37,7 @@ const ViewProgress = () => {
       <main className="flex-grow flex flex-col items-center justify-center my-10 px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl">
           <h1 className="text-3xl text-center font-bold text-primary mb-4">
-            Personal Best Scoreboard
+            Global Scoreboard
           </h1>
 
           {/* Score Table */}

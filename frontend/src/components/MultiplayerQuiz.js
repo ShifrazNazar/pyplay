@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 import axios from "axios";
 import Navbar from "./Navbar";
 import CompleteQuiz from "./CompleteQuiz";
+import { useAuth } from "../context/AuthContext";
 
 const socket = io("http://localhost:5001");
 
@@ -21,6 +22,7 @@ const MultiplayerQuiz = () => {
   const [showCompleteQuiz, setShowCompleteQuiz] = useState(false);
 
   const navigate = useNavigate();
+  const { user } = useAuth();
   const location = useLocation();
   const roomCode = location.state?.roomCode;
 
@@ -93,7 +95,7 @@ const MultiplayerQuiz = () => {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (answerSubmitted) {
       if (currentQuestionIndex < questions.length - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -104,7 +106,22 @@ const MultiplayerQuiz = () => {
         setAnswerSubmitted(false);
         setErrorMessage("");
       } else {
-        setShowCompleteQuiz(true);
+        // Quiz is complete - submit scores to backend
+        try {
+          const token = localStorage.getItem("token");
+          await axios.post(
+            "http://localhost:5001/api/quiz/submit",
+            { userId: user.id, score },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setShowCompleteQuiz(true);
+        } catch (error) {
+          console.error("Error submitting quiz:", error);
+        }
       }
     } else {
       setErrorMessage(
@@ -246,8 +263,9 @@ const MultiplayerQuiz = () => {
         </div>
       </main>
 
-      {/* Show completion modal when quiz is done */}
-      {showCompleteQuiz && <CompleteQuiz score={score} onClose={closeModal} />}
+      {showCompleteQuiz && (
+        <CompleteQuiz score={score} onClose={closeModal} />
+      )}
     </div>
   );
 };
