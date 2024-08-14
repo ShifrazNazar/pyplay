@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "./Navbar";
 
-const Profile = () => {
-  const [profile, setProfile] = useState(null);
-  const [newUsername, setNewUsername] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+interface ProfileData {
+  username: string;
+  email: string;
+  created_at: string;
+}
+
+const Profile: React.FC = () => {
+  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [newUsername, setNewUsername] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string>("");
   const { user } = useAuth();
 
   useEffect(() => {
@@ -46,10 +52,15 @@ const Profile = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setProfile((prevProfile) => ({
-          ...prevProfile,
-          username: newUsername,
-        }));
+        setProfile((prevProfile) => {
+          if (prevProfile) {
+            return {
+              ...prevProfile,
+              username: newUsername,
+            };
+          }
+          return null; // Handle the case where prevProfile is null
+        });
         setIsModalOpen(false);
         setSuccessMessage("Username updated successfully!");
         setTimeout(() => setSuccessMessage(""), 3000); // Clear message after 3 seconds

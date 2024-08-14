@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleLogout = () => {
     logout();
@@ -142,7 +142,7 @@ const Navbar = () => {
               Single Player Quiz
             </a>
             <a
-              href="/multiplayer-quiz"
+              href="/room"
               className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
             >
               Multiplayer Quiz

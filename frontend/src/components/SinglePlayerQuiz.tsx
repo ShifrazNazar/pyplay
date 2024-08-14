@@ -5,10 +5,22 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import CompleteQuiz from "./CompleteQuiz";
 
-const SinglePlayerQuiz = () => {
-  const [questions, setQuestions] = useState([]);
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Question {
+  question: string;
+  options: Option[];
+  answer: string;
+  hint: string;
+}
+
+const SinglePlayerQuiz: React.FC = () => {
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [hintUsed, setHintUsed] = useState(false);
   const [answerSubmitted, setAnswerSubmitted] = useState(false);
@@ -24,7 +36,7 @@ const SinglePlayerQuiz = () => {
     const fetchQuestions = async () => {
       try {
         const response = await axios.get("http://localhost:5001/api/mcqs");
-        const formattedQuestions = response.data.map((question) => ({
+        const formattedQuestions: Question[] = response.data.map((question: any) => ({
           ...question,
           options: [
             { value: question.optionA, label: question.optionA },
@@ -48,7 +60,7 @@ const SinglePlayerQuiz = () => {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  const handleAnswer = (optionValue) => {
+  const handleAnswer = (optionValue: string) => {
     if (!answerSubmitted && !optionsDisabled) {
       setSelectedOption(optionValue);
 
@@ -82,7 +94,7 @@ const SinglePlayerQuiz = () => {
           const token = localStorage.getItem("token");
           await axios.post(
             "http://localhost:5001/api/quiz/submit",
-            { userId: user.id, score },
+            { userId: user?.id, score },
             {
               headers: {
                 Authorization: `Bearer ${token}`,

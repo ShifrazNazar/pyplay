@@ -1,4 +1,4 @@
-// src/App.js
+// src/App.tsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
@@ -14,7 +14,7 @@ import Home from "./components/Home";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import Profile from "./components/Profile";
 
-function App() {
+const App: React.FC = () => {
   return (
     <AuthProvider>
       <Router>
@@ -51,6 +51,6 @@ function App() {
       </Router>
     </AuthProvider>
   );
-}
+};
 
 export default App;

@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Login = () => {
+const Login: React.FC = () => {
   const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     if (email && password) {
       try {
-        const response = await axios.post(
+        const response = await axios.post<{ token: string }>(
           "http://localhost:5001/api/auth/login",
           { email, password }
         );
