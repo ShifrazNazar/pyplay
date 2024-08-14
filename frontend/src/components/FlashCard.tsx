@@ -3,9 +3,15 @@ import { useNavigate } from "react-router-dom";
 import flashcards from "../data/flashcards";
 import Navbar from "./Navbar";
 
-const Flashcards = () => {
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [showAnswer, setShowAnswer] = useState(false);
+interface Flashcard {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+const Flashcards: React.FC = () => {
+  const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
+  const [showAnswer, setShowAnswer] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleNext = () => {
@@ -26,7 +32,7 @@ const Flashcards = () => {
     navigate("/"); // Redirect to home page
   };
 
-  const currentCard = flashcards[currentCardIndex];
+  const currentCard: Flashcard = flashcards[currentCardIndex];
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">

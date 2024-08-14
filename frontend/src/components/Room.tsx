@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 
-const Room = () => {
-  const [roomCode, setRoomCode] = useState("");
+const Room: React.FC = () => {
+  const [roomCode, setRoomCode] = useState<string>("");
   const navigate = useNavigate();
 
   const handleJoinRoom = () => {
     if (roomCode.trim()) {
       navigate("/multiplayer-quiz", { state: { roomCode } });
     }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setRoomCode(e.target.value);
   };
 
   return (
@@ -31,7 +35,7 @@ const Room = () => {
               id="roomCode"
               type="text"
               value={roomCode}
-              onChange={(e) => setRoomCode(e.target.value)}
+              onChange={handleChange}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Room Code"
             />

@@ -1,40 +1,55 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import axios from "axios";
 import Navbar from "./Navbar";
 import CompleteQuiz from "./CompleteQuiz";
 import { useAuth } from "../context/AuthContext";
 
-const socket = io("http://localhost:5001");
+// Define types for questions and options
+interface Option {
+  value: string;
+  label: string;
+}
 
-const MultiplayerQuiz = () => {
-  const [questions, setQuestions] = useState([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [score, setScore] = useState(0);
-  const [opponentScore, setOpponentScore] = useState(0);
-  const [hintUsed, setHintUsed] = useState(false);
-  const [answerSubmitted, setAnswerSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [hintDisabled, setHintDisabled] = useState(false);
-  const [optionsDisabled, setOptionsDisabled] = useState(false);
-  const [showCompleteQuiz, setShowCompleteQuiz] = useState(false);
+interface Question {
+  id: string;
+  question: string;
+  options: Option[];
+  answer: string;
+  hint: string;
+}
+
+const socket: Socket = io("http://localhost:5001");
+
+const MultiplayerQuiz: React.FC = () => {
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [score, setScore] = useState<number>(0);
+  const [opponentScore, setOpponentScore] = useState<number>(0);
+  const [hintUsed, setHintUsed] = useState<boolean>(false);
+  const [answerSubmitted, setAnswerSubmitted] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [hintDisabled, setHintDisabled] = useState<boolean>(false);
+  const [optionsDisabled, setOptionsDisabled] = useState<boolean>(false);
+  const [showCompleteQuiz, setShowCompleteQuiz] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const { user } = useAuth();
   const location = useLocation();
-  const roomCode = location.state?.roomCode;
+  const roomCode = location.state?.roomCode as string;
 
   useEffect(() => {
     if (!roomCode) {
       navigate("/");
+      return;
     }
 
     const fetchQuestions = async () => {
       try {
         const response = await axios.get("http://localhost:5001/api/mcqs");
-        const formattedQuestions = response.data.map((question) => ({
+        const formattedQuestions: Question[] = response.data.map((question: any) => ({
           ...question,
           options: [
             { value: question.optionA, label: question.optionA },
@@ -53,7 +68,7 @@ const MultiplayerQuiz = () => {
 
     socket.emit("joinRoom", { roomCode });
 
-    socket.on("updateOpponentScore", (newScore) => {
+    socket.on("updateOpponentScore", (newScore: number) => {
       setOpponentScore(newScore);
     });
 
@@ -69,7 +84,7 @@ const MultiplayerQuiz = () => {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  const handleAnswer = (optionValue) => {
+  const handleAnswer = (optionValue: string) => {
     if (!answerSubmitted && !optionsDisabled) {
       setSelectedOption(optionValue);
 
@@ -111,7 +126,7 @@ const MultiplayerQuiz = () => {
           const token = localStorage.getItem("token");
           await axios.post(
             "http://localhost:5001/api/quiz/submit",
-            { userId: user.id, score },
+            { userId: user?.id, score },
             {
               headers: {
                 Authorization: `Bearer ${token}`,

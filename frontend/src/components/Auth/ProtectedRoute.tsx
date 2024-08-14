@@ -1,9 +1,13 @@
-// src/components/ProtectedRoute.js
+// src/components/ProtectedRoute.tsx
 import React from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ element }) => {
+interface ProtectedRouteProps {
+  element: React.ReactElement;
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
   const { isAuthenticated } = useAuth();
 
   return isAuthenticated ? element : <Navigate to="/login" />;
